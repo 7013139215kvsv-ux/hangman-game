@@ -1,0 +1,29 @@
+import os
+import shutil
+
+def move_jpg_files(source_folder, destination_folder):
+    # Check if the source folder exists
+    if not os.path.exists(source_folder):
+        print(f"Source folder '{source_folder}' does not exist.")
+        return
+
+    # Create the destination folder if it doesn't exist
+    if not os.path.exists(destination_folder):
+        os.makedirs(destination_folder)
+        print(f"Destination folder '{destination_folder}' created.")
+
+    # Move all .jpg files from source to destination
+    for filename in os.listdir(source_folder):
+        if filename.endswith('.jpg'):
+            source_file = os.path.join(source_folder, filename)
+            destination_file = os.path.join(destination_folder, filename)
+            shutil.move(source_file, destination_file)
+            print(f"Moved: {filename}")
+
+    print("All .jpg files have been moved.")
+
+# Example usage
+source_folder = 'path/to/source/folder'  # Replace with your source folder path
+destination_folder = 'path/to/destination/folder'  # Replace with your destination folder path
+
+move_jpg_files(source_folder, destination_folder)
