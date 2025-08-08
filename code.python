@@ -1,0 +1,52 @@
+# Stock Portfolio Tracker
+
+# Hardcoded stock prices
+stock_prices = {
+    "AAPL": 180,
+    "TSLA": 250,
+    "GOOGL": 2800,
+    "AMZN": 3400
+}
+
+def calculate_investment():
+    total_investment = 0
+    portfolio = {}
+
+    # User input for stock names and quantities
+    while True:
+        stock_name = input("Enter stock name (or 'done' to finish): ").upper()
+        if stock_name == 'DONE':
+            break
+        if stock_name in stock_prices:
+            quantity = int(input(f"Enter quantity for {stock_name}: "))
+            portfolio[stock_name] = quantity
+            total_investment += stock_prices[stock_name] * quantity
+        else:
+            print("Stock not found. Please enter a valid stock name.")
+
+    print(f"\nTotal Investment Value: ${total_investment}")
+
+    # Option to save results to a file
+    save_option = input("Do you want to save the results to a file? (yes/no): ").lower()
+    if save_option == 'yes':
+        file_type = input("Choose file type (txt/csv): ").lower()
+        if file_type == 'txt':
+            with open("portfolio.txt", "w") as file:
+                file.write("Stock Portfolio:\n")
+                for stock, qty in portfolio.items():
+                    file.write(f"{stock}: {qty} shares at ${stock_prices[stock]} each\n")
+                file.write(f"Total Investment Value: ${total_investment}\n")
+            print("Results saved to portfolio.txt")
+        elif file_type == 'csv':
+            with open("portfolio.csv", "w") as file:
+                file.write("Stock,Quantity,Price,Total\n")
+                for stock, qty in portfolio.items():
+                    total_price = stock_prices[stock] * qty
+                    file.write(f"{stock},{qty},{stock_prices[stock]},{total_price}\n")
+                file.write(f"Total Investment Value,,,{total_investment}\n")
+            print("Results saved to portfolio.csv")
+        else:
+            print("Invalid file type selected. Results not saved.")
+
+# Run the investment calculator
+calculate_investment()
